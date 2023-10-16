@@ -9,7 +9,7 @@ function isToeplitzMatrix(matrix: number[][]): boolean {
   return true;
 }
 
-const testData: TestData[] = [
+const testData = [
   {
     matrix: [
       [1, 2, 3, 4],
