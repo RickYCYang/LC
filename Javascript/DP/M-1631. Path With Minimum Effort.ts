@@ -11,8 +11,8 @@ function minimumEffortPath(heights: number[][]): number {
     [0, -1], //left
     [0, 1], //right
   ];
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {}
+  const bfs = (x, y) => {
+    if (x > 0) 
   }
 }
 
