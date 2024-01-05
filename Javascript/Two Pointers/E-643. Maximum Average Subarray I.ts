@@ -1,17 +1,13 @@
 function findMaxAverage(nums: number[], k: number): number {
-  let l = 0;
-  let r = 0;
+  let [l, r] = [0, 0];
   let maxAvg = Number.MIN_SAFE_INTEGER;
   let sum = 0;
   while (r < nums.length) {
-    sum += nums[r];
-    if (r - l === k - 1) {
-      const avg = sum / k;
-      maxAvg = Math.max(maxAvg, avg);
-      sum -= nums[l];
-      l++;
-    }
-    r++;
+    sum += nums[r++];
+    if (r < k) continue;
+    const avg = sum / k;
+    maxAvg = Math.max(maxAvg, avg);
+    sum -= nums[l++];
   }
   return maxAvg;
 }

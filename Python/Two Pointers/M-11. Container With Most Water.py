@@ -5,13 +5,10 @@ class Solution:
     @classmethod
     def maxArea(self, height) -> int:
         max_area = -sys.maxsize
-        n = len(height)
-        l = 0
-        r = n - 1
-
+        l, r = 0, len(height) - 1
         while l < r:
-            cur_area = (r - l) * min(height[l], height[r])
-            max_area = max(max_area, cur_area)
+            area = (r - l) * min(height[l], height[r])
+            max_area = max(max_area, area)
             if height[l] < height[r]:
                 l += 1
             else:
