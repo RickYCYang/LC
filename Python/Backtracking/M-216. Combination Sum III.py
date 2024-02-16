@@ -3,30 +3,38 @@ from typing import List
 
 class Solution:
     @classmethod
-    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
-        result = []
+    def combinationSum3(cls, k: int, n: int) -> List[List[int]]:
+        if k > n:
+            return []
 
-        def backtracking(cur_idx: int, rem_target: int, cur_candidates: list[int]):
-            if len(cur_candidates) > k or rem_target < 0:
-                return
+        combinations = []
+        Solution.backtrack(k, n, combinations, 1, [])
+        return combinations
 
-            if len(cur_candidates) == k and rem_target == 0:
-                result.append(cur_candidates.copy())
-                return
+    @classmethod
+    def backtrack(
+        cls,
+        k: int,
+        rem_target: int,
+        combinations: List[List[int]],
+        cur_idx: int,
+        candidates: list[int],
+    ):
+        if len(candidates) > k:
+            return
+        if len(candidates) == k and rem_target == 0:
+            combinations.append(candidates.copy())
+            return
 
-            for candidate in range(cur_idx, 10):
-                if candidate > 9 or candidate > n:
-                    return
-                cur_candidates.append(candidate)
-                backtracking(
-                    cur_idx=candidate+1,
-                    rem_target=rem_target-candidate,
-                    cur_candidates=cur_candidates
-                )
-                cur_candidates.pop()
-
-        backtracking(1, n, [])
-        return result
+        for candidate in range(cur_idx, 10):
+            updated_rem_target = rem_target - candidate
+            if updated_rem_target < 0:
+                break
+            candidates.append(candidate)
+            Solution.backtrack(
+                k, updated_rem_target, combinations, candidate + 1, candidates
+            )
+            candidates.pop()
 
 
 testData = [
@@ -62,6 +70,4 @@ testData = [
 ]
 
 for data in testData:
-    print(
-        data["ans"] == Solution.combinationSum3(data["k"], data["n"])
-    )
+    print(data["ans"] == Solution.combinationSum3(data["k"], data["n"]))

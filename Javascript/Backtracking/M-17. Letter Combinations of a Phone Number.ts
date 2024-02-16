@@ -1,44 +1,30 @@
 function letterCombinations(digits: string): string[] {
-  const digitsLength = digits.length;
+  if (digits.length === 0) return [];
+  const letterMap: Map<string, string> = new Map([
+    ['2', 'abc'],
+    ['3', 'def'],
+    ['4', 'ghi'],
+    ['5', 'jkl'],
+    ['6', 'mno'],
+    ['7', 'pqrs'],
+    ['8', 'tuv'],
+    ['9', 'wxyz'],
+  ]);
   const combinations: string[] = [];
-  if (digitsLength === 0) return combinations;
-
-  const numLetterMap = {
-    '2': 'abc',
-    '3': 'def',
-    '4': 'ghi',
-    '5': 'jkl',
-    '6': 'mno',
-    '7': 'pqrs',
-    '8': 'tuv',
-    '9': 'wxyz',
-  };
-  backtrack(digits, numLetterMap, combinations, 0, digitsLength, '');
+  backTrack(digits, letterMap, combinations, '');
   return combinations;
 }
 
-const backtrack = (
+const backTrack = (
   digits: string,
-  numLetterMap: object,
+  letterMap: Map<string, string>,
   combinations: string[],
-  curPosition: number,
-  digitsLength: number,
-  curString: string
+  letters: string
 ) => {
-  if (curPosition === digitsLength) {
-    combinations.push(curString);
-    return;
-  }
-  const letters = numLetterMap[digits[curPosition]];
-  for (const letter of letters) {
-    backtrack(
-      digits,
-      numLetterMap,
-      combinations,
-      curPosition + 1,
-      digitsLength,
-      curString + letter
-    );
+  if (letters.length === digits.length) return combinations.push(letters);
+  const position: number = letters.length;
+  for (const char of letterMap.get(digits[position]) || '') {
+    backTrack(digits, letterMap, combinations, letters + char);
   }
 };
 

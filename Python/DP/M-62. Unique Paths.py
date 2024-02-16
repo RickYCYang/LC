@@ -1,20 +1,14 @@
 class Solution:
     @classmethod
     def uniquePaths(self, m: int, n: int) -> int:
-        path = m * [n * [0]]
-        path[0][0] = 1
-
-        for row in range(m):
-            for col in range(n):
-                if row > 0 and col > 0:
-                    path[row][col] = path[row][col - 1] + path[row - 1][col]
-                elif row > 0:
-                    path[row][col] = path[row - 1][col]
-                elif col > 0:
-                    path[row][col] = path[row][col - 1]
-
-        print(path)
-        return path[m-1][n-1]
+        dp = [[0 for _ in range(n)] for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if i == 0 or j == 0:
+                    dp[i][j] = 1
+                else:
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+        return dp[m - 1][n - 1]
 
 
 test_data = [

@@ -1,61 +1,48 @@
-
 class Solution:
     @classmethod
-    def letterCombinations(self, digits: str):
-        digits_length = len(digits)
-        combinations = []
-        if digits_length == 0:
-            return combinations
+    def letterCombinations(cls, digits: str):
+        if len(digits) == 0:
+            return []
 
-        num_letter_map = {
-            '2': 'abc',
-            '3': 'def',
-            '4': 'ghi',
-            '5': 'jkl',
-            '6': 'mno',
-            '7': 'pqrs',
-            '8': 'tuv',
-            '9': 'wxyz',
+        letter_map = {
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz",
         }
-        self.backtrack(
-            digits,
-            num_letter_map,
-            combinations,
-            0,
-            digits_length,
-            ""
-        )
+        combinations = []
+        Solution.backtrack(digits, letter_map, combinations, "")
         return combinations
 
     @classmethod
-    def backtrack(self, digits, num_letter_map, combinations, current_position, digits_length, current_string):
-        if (current_position == digits_length):
-            combinations.append(current_string)
+    def backtrack(
+        cls, digits: str, letter_map: dict, combinations: list[str], letters: str
+    ):
+        if len(letters) == len(digits):
+            combinations.append(letters)
             return
-        letters = num_letter_map[digits[current_position]]
-        for letter in letters:
-            self.backtrack(
-                digits,
-                num_letter_map,
-                combinations,
-                current_position + 1,
-                digits_length,
-                current_string + letter
-            )
+
+        position = len(letters)
+        for char in letter_map.get(digits[position]):
+            Solution.backtrack(digits, letter_map, combinations, letters + char)
 
 
 test_data = [
     {
-        "digits": '23',
-        "ans": ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf'],
+        "digits": "23",
+        "ans": ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"],
     },
     {
-        "digits": '',
+        "digits": "",
         "ans": [],
     },
     {
-        "digits": '2',
-        "ans": ['a', 'b', 'c'],
+        "digits": "2",
+        "ans": ["a", "b", "c"],
     },
 ]
 

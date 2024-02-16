@@ -1,29 +1,32 @@
 function combinationSum3(k: number, n: number): number[][] {
-  const result: number[][] = [];
+  if (k > n) return [];
 
-  const backtracking = (
-    curIdx: number,
-    remTarget: number,
-    curCandidates: number[]
-  ): void => {
-    if (remTarget < 0 || curCandidates.length > k) return;
-
-    if (remTarget === 0 && curCandidates.length === k) {
-      result.push([...curCandidates]);
-      return;
-    }
-
-    for (let candidate = curIdx; candidate < 10; candidate++) {
-      if (candidate > n || candidate > 9) return;
-      curCandidates.push(candidate);
-      backtracking(candidate + 1, remTarget - candidate, curCandidates);
-      curCandidates.pop();
-    }
-  };
-
-  backtracking(1, n, []);
-  return result;
+  const combinations: number[][] = [];
+  backtrack(k, n, combinations, 1, []);
+  return combinations;
 }
+
+const backtrack = (
+  k: number,
+  remTarget: number,
+  combinations: number[][],
+  curIdx: number,
+  candidates: number[]
+): void => {
+  if (candidates.length > k) return;
+  if (candidates.length === k && remTarget === 0) {
+    combinations.push([...candidates]);
+    return;
+  }
+
+  for (let candidate = curIdx; candidate < 10; candidate++) {
+    const updatedRemTarget = remTarget - candidate;
+    if (updatedRemTarget < 0) break;
+    candidates.push(candidate);
+    backtrack(k, updatedRemTarget, combinations, candidate + 1, candidates);
+    candidates.pop();
+  }
+};
 
 const testData = [
   {
