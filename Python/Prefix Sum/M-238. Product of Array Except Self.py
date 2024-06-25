@@ -4,16 +4,13 @@ class Solution:
         n = len(nums)
         result = []
         multiplier = 1
-
         for i in range(n):
             result.append(multiplier)
             multiplier *= nums[i]
-
         multiplier = 1
         for i in range(n - 1, -1, -1):
             result[i] *= multiplier
             multiplier *= nums[i]
-
         return result
 
 

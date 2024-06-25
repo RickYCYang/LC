@@ -1,7 +1,6 @@
 function canCompleteCircuit(gas: number[], cost: number[]): number {
   let position = 0;
-  let ttlTank = 0;
-  let curTank = 0;
+  let [curTank, ttlTank] = [0, 0];
   for (let i = 0; i < gas.length; i++) {
     curTank += gas[i] - cost[i];
     ttlTank += gas[i] - cost[i];
@@ -10,7 +9,7 @@ function canCompleteCircuit(gas: number[], cost: number[]): number {
       position = i + 1;
     }
   }
-  return ttlTank < 0 ? -1 : position;
+  return ttlTank >= 0 ? position : -1;
 }
 
 const testData = [

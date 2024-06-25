@@ -9,20 +9,16 @@ function romanToInt(s: string): number {
     M: 1000,
   };
 
-  let i = 0;
-  let ans = 0;
-  while (i < s.length) {
-    const curChar = s[i];
-    const nextChar = s[i + 1];
-    if (romanMap[curChar] < romanMap[nextChar]) {
-      ans += romanMap[nextChar] - romanMap[curChar];
+  let result = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (romanMap[s[i]] < romanMap[s[i + 1]]) {
+      result += romanMap[s[i + 1]] - romanMap[s[i]];
       i++;
     } else {
-      ans += romanMap[curChar];
+      result += romanMap[s[i]];
     }
-    i++;
   }
-  return ans;
+  return result;
 }
 
 const testResult = () => {

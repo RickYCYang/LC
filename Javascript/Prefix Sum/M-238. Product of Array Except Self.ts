@@ -2,20 +2,15 @@ function productExceptSelf(nums: number[]): number[] {
   const n = nums.length;
   const result: number[] = [];
   let multiplier = 1;
-
-  /** from left */
   for (let i = 0; i < n; i++) {
-    result[i] = multiplier;
+    result.push(multiplier);
     multiplier *= nums[i];
   }
-
-  /** from right */
   multiplier = 1;
   for (let i = n - 1; i >= 0; i--) {
     result[i] *= multiplier;
     multiplier *= nums[i];
   }
-
   return result;
 }
 

@@ -1,7 +1,6 @@
 class TrieNode {
   children: object;
   isEndChar: boolean;
-
   constructor() {
     this.children = {};
     this.isEndChar = false;
@@ -13,32 +12,30 @@ class Trie {
   constructor() {
     this.root = new TrieNode();
   }
-
   insert(word: string): void {
     let node = this.root;
     for (const char of word) {
-      if (!node.children[char]) node.children[char] = new TrieNode();
+      if (!(char in node.children)) node.children[char] = new TrieNode();
       node = node.children[char];
     }
     node.isEndChar = true;
   }
 
-  search(word: string): boolean {
+  isMatched(word: string, fullyMatched = true): boolean {
     let node = this.root;
     for (const char of word) {
-      if (!node.children[char]) return false;
+      if (!(char in node.children)) return false;
       node = node.children[char];
     }
-    return node.isEndChar ? true : false;
+    return fullyMatched ? node.isEndChar : true;
+  }
+
+  search(word: string): boolean {
+    return this.isMatched(word);
   }
 
   startsWith(prefix: string): boolean {
-    let node = this.root;
-    for (const char of prefix) {
-      if (!node.children[char]) return false;
-      node = node.children[char];
-    }
-    return true;
+    return this.isMatched(prefix, false);
   }
 }
 
