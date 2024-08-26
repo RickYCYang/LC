@@ -14,8 +14,7 @@ function isValid(s: string): boolean {
       if (parenthesesMap[char] !== openBracket) return false;
     }
   }
-  if (stack.length > 0) return false;
-  else return true;
+  return stack.length > 0 ? false : true;
 }
 
 const testData = [

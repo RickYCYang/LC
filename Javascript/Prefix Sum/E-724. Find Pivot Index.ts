@@ -1,8 +1,9 @@
 function pivotIndex(nums: number[]): number {
-  const ttlSum = nums.reduce((prev, cur) => prev + cur, 0);
+  const total = nums.reduce((accu, num) => accu + num);
   let leftSum = 0;
   for (let i = 0; i < nums.length; i++) {
-    if ((ttlSum - nums[i]) / 2 === leftSum) return i;
+    const rightSum = total - nums[i] - leftSum;
+    if (leftSum === rightSum) return i;
     leftSum += nums[i];
   }
   return -1;
